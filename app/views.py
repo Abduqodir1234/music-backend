@@ -85,6 +85,11 @@ def download(request, id):
 
 class Tops(viewsets.ViewSet):
     def topmusic(request, self):
-        obj = Song.objects.all().order_by("likes")[:50]
+        obj = Song.objects.all().order_by("-likes")[:10]
         serializer = SongSerializer(obj, many=True)
+        return Response(serializer.data)
+
+    def topartists(self, request):
+        obj = Artist.objects.all().order_by("likes")[:10]
+        serializer = ArtistSerializer(obj,many=True)
         return Response(serializer.data)
