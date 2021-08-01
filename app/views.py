@@ -9,7 +9,6 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from rest_framework import filters
 
-
 class CategoryApiView(APIView):
     serializers = CategorySerializer
 
@@ -19,8 +18,6 @@ class CategoryApiView(APIView):
         return Response(serializer.data)
 
 # Create your views here.
-
-
 class ArtistApiView(APIView):
     serializers = ArtistSerializer
 
@@ -28,7 +25,6 @@ class ArtistApiView(APIView):
         category = Artist.objects.all().order_by('name')
         serializer = self.serializers(category, many=True)
         return Response(serializer.data)
-
 
 class SongView(viewsets.ViewSet):
     serilize = SongSerializer
@@ -51,14 +47,12 @@ class SongView(viewsets.ViewSet):
         song.save()
         return Response({'status': 'ok'})
 
-
 @api_view(['GET'])
 def songswithcategory(request, pk=None):
     category = Category.objects.get(id=pk)
     queryset = Song.objects.filter(category=category)
     serializer = SongSerializer(queryset, many=True)
     return Response(serializer.data)
-
 
 @api_view(['GET'])
 def songswithartists(request, pk=None):
@@ -67,13 +61,11 @@ def songswithartists(request, pk=None):
     serializer = SongSerializer(queryset, many=True)
     return Response(serializer.data)
 
-
 class SearchAPIView(generics.ListCreateAPIView):
     search_fields = ['^title', '^artist__name', '^category__title']
     filter_backends = (filters.SearchFilter,)
     queryset = Song.objects.all()
     serializer_class = SongSerializer
-
 
 @api_view(['GET'])
 def download(request, id):
@@ -81,7 +73,6 @@ def download(request, id):
     filename = obj.music_file.path
     response = FileResponse(open(filename, 'rb'))
     return response
-
 
 class Tops(viewsets.ViewSet):
     def topmusic(request, self):

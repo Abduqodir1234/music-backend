@@ -7,7 +7,6 @@ song_list = SongView.as_view({'get': 'list'})
 song_detail = SongView.as_view({'get': 'retrieve'})
 song_like = SongView.as_view({'get': 'post'})
 
-
 top_musics = Tops.as_view({"get": "topmusic"})
 # top_artists = Tops.as_view({"get": "topartists"})
 
@@ -16,7 +15,7 @@ urlpatterns = [
     path('artists', ArtistApiView.as_view(), name='artists'),
     path('songs', song_list, name='lists'),
     path('songs/<int:pk>', song_detail, name='song-detail'),
-    path('songs/category/<int:pk>', songswithcategory, name='song-category'),
+    path('sons/catgegory/<int:pk>', songswithcategory, name='song-category'),
     path('songs/artist/<int:pk>', songswithartists, name='song-artist'),
     path('music/', SearchAPIView.as_view()),
     path('download/song/<int:id>', download, name='song-download'),
