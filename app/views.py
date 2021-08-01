@@ -71,7 +71,7 @@ class SearchAPIView(generics.ListCreateAPIView):
 def download(request, id):
     obj = Song.objects.get(id=id)
     filename = obj.music_file.path
-    response = FileResponse(open(filename, 'rb'))
+    response = FileResponse(open(filename, 'rb'),as_attachment = True)
     return response
 
 class Tops(viewsets.ViewSet):
