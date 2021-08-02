@@ -13,9 +13,14 @@ class CategoryApiView(APIView):
     serializers = CategorySerializer
 
     def get(self, request, format=None):
-        category = Category.objects.all().order_by('-id')
+        #First Category Musics
+        first = Category.objects.all()
+        queryset = Song.objects.filter(category=first[0])
+        serializer2 = SongSerializer(queryset, many=True)
+        #---------------------------
+        category = first.order_by('-id')
         serializer = self.serializers(category, many=True)
-        return Response(serializer.data)
+        return Response({"category":serializer.data,"music":serializer2.data,"category_name":first[0].title})
 
 # Create your views here.
 class ArtistApiView(APIView):
@@ -50,6 +55,7 @@ class SongView(viewsets.ViewSet):
 @api_view(['GET'])
 def songswithcategory(request, pk=None):
     category = Category.objects.get(id=pk)
+
     queryset = Song.objects.filter(category=category)
     serializer = SongSerializer(queryset, many=True)
     return Response(serializer.data)
