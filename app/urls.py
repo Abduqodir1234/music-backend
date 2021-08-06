@@ -8,6 +8,7 @@ song_detail = SongView.as_view({'get': 'retrieve'})
 song_like = SongView.as_view({'get': 'post'})
 
 top_musics = Tops.as_view({"get": "topmusic"})
+recent_music = Tops.as_view({"get":"recentmusics"})
 # top_artists = Tops.as_view({"get": "topartists"})
 
 urlpatterns = [
@@ -21,6 +22,7 @@ urlpatterns = [
     path('download/song/<int:id>', download, name='song-download'),
     path('like/song/<int:pk>', song_like, name='song-like'),
     path("top/musics", top_musics),
+    path("songs/recent/",recent_music)
     # path("top/artists/",top_artists) 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
