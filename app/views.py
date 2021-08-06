@@ -91,6 +91,6 @@ class Tops(viewsets.ViewSet):
         serializer = ArtistSerializer(obj,many=True)
         return Response(serializer.data)
     def recentmusics(self,request):
-        obj = Song.objects.all().order_by("-date")[:10]
+        obj = Song.objects.all().order_by("-date","-likes")[:10]
         serializer = SongSerializer(obj,many=True)
         return Response(serializer.data)
