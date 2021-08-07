@@ -22,7 +22,7 @@ urlpatterns = [
     path('download/song/<int:id>', download, name='song-download'),
     path('like/song/<int:pk>', song_like, name='song-like'),
     path("top/musics", top_musics),
-    path("songs/recent/",recent_music)
+    path("songs/recent/",recent_music),
     # path("top/artists/",top_artists) 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

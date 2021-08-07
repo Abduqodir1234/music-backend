@@ -27,8 +27,8 @@ class ArtistApiView(APIView):
     serializers = ArtistSerializer
 
     def get(self, request, format=None):
-        category = Artist.objects.all().order_by('name')
-        serializer = self.serializers(category, many=True)
+        artist = Artist.objects.all().order_by('name')
+        serializer = self.serializers(artist, many=True)
         return Response(serializer.data)
 
 class SongView(viewsets.ViewSet):
@@ -94,3 +94,4 @@ class Tops(viewsets.ViewSet):
         obj = Song.objects.all().order_by("-date","-likes")[:10]
         serializer = SongSerializer(obj,many=True)
         return Response(serializer.data)
+
