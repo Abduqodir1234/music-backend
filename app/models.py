@@ -34,3 +34,12 @@ class Song(models.Model):
     photo = models.ImageField(blank=True)
     def __str__(self):
         return "%s - %s" % (self.title, self.artist)
+class YouTubeChannelUrls(models.Model):
+    url = models.URLField()
+
+class YoutubeMusicInfo(models.Model):
+    name = models.CharField(max_length=1000)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.name
