@@ -1,0 +1,45 @@
+from django.db import models
+
+# Create your models here.
+
+
+class Artist(models.Model):
+    name = models.CharField('Ismi', max_length=50)
+    photo = models.ImageField(null=True, blank=True)
+    likes = models.PositiveIntegerField(null=True, blank=True, default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    title = models.CharField('kategoriya', max_length=50)
+    photo = models.ImageField('photo', )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+
+class Song(models.Model):
+    title = models.CharField('nomi', max_length=50)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True)
+    artist = models.ForeignKey(Artist, on_delete=models.SET_NULL, null=True)
+    music_file = models.FileField('Musiqa Fayli', upload_to='musics',)
+    likes = models.PositiveIntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+    photo = models.ImageField(blank=True)
+    def __str__(self):
+        return "%s - %s" % (self.title, self.artist)
+class YouTubeChannelUrls(models.Model):
+    url = models.URLField()
+
+class YoutubeMusicInfo(models.Model):
+    name = models.CharField(max_length=1000)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.name
