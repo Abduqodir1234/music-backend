@@ -17,6 +17,8 @@ from selenium.webdriver.common.keys import Keys
 from youtube_dl import YoutubeDL
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.contrib.auth.decorators import permission_required,login_required
+
+
 class CategoryApiView(APIView):
     serializers = CategorySerializer
 
@@ -138,26 +140,25 @@ class YoutubeMusicInfo2(APIView):
         video = "https://www.youtube.com/watch?v=EEhKF3Qc1Bw"
         ydl_opts = {
             'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
+            # 'postprocessors': [{
+            #     'key': 'FFmpegExtractAudio',
+            #     'preferredcodec': 'mp3',
+            #     'preferredquality': '192',
+            # }],
         }
-        with YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(video, download=False)
-            video_url = info_dict.get("url", None)
-            video_id = info_dict.get("id", None)
-            video_title = info_dict.get('title', None)
-            print("TItle:",video_title)
-            return Response({"salom":"salom"})
+        with YoutubeDL(ydl_opts) as ydl: 
+            x = ydl.extract_info(video,download=False)
+            # video_url = info_dict.get("url", None)
+            # video_id = info_dict.get("id", None)
+            # video_title = info_dict.get('title', None)
+            # print("TItle:",video_title)
+            return Response(x)
 
 @login_required(login_url="/api/songs")
-@permission_required("YoutubeMusicInfo.add_choice")
 def get_channel_url(request):
     if request.method == "POST":
         links = []
-        video = request.POST["youtube_channel_url"]
+        video = request.POST.get("youtube_channel_url")
         driver = webdriver.Chrome("C:\\chromedriver.exe")
         driver.get(video)
         def collectLinks():
@@ -174,7 +175,7 @@ def get_channel_url(request):
                 elements.append(str(elem.get_attribute("href")))
 
             for i in elements:
-                if YoutubeMusicInfo.objects.filter(url = i).exists():
+                if Song.objects.filter(url = i).exists():
                     pass
                 else:
                     ydl_opts = {
@@ -187,12 +188,15 @@ def get_channel_url(request):
                     }
                     with YoutubeDL(ydl_opts) as ydl:
                         try:
+                            category = Category.objects.first()
+                            artist = Artist.objects.first()
                             if i.startswith("https://www.youtube.com/watch?v="):
                                 info_dict = ydl.extract_info(i, download=False)
                                 video_title = info_dict.get('title', None)
+                                url2 = info_dict.get("url",None)
                                 print(video_title)
-                                if video_title and i.startswith("https://www.youtube.com/watch?v="):
-                                    x = YoutubeMusicInfo.objects.create(url=i,name=video_title)
+                                if video_title and i.startswith("https://www.youtube.com/watch?v=") and not (Song.objects.filter(url = url2).exists()) :
+                                    x = Song.objects.create(url=url2,title=video_title,category=category,artist=artist)
                                     x.save()
                         except:
                             print("some problem")
@@ -201,4 +205,19 @@ def get_channel_url(request):
         collectLinks()
         driver.quit()
         return redirect("/api/url")
-    return render(request,"demo5.html")
+    else:
+        return render(request,"demo5.html")
+
+@login_required(login_url="/api/songs")
+def get_music(request):
+    x = Category.objects.all()
+    y = Artist.objects.all()
+    if request.method == "POST":
+        artist = Artist.objects.get(id = request.POST.get("artist")) or Artist.objects.first()
+        title = request.POST.get("title") or "" 
+        url = request.POST.get("url") or ""
+        music = request.POST.get("music")
+        category = Category.objects.first(id = request.POST.get("category"))  or Category.objects.first()
+        d = Song.objects.create(title = title,artist=artist,url=url,category=category,music_file2=music)
+        d.save()
+    return render(request,"new one.html",{"x":x,"y":y})

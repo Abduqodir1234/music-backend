@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'corsheaders',
+    "ffmpeg",
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models.fields import URLField
 # Create your models here.
 
 
@@ -13,8 +13,8 @@ class Artist(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField('kategoriya', max_length=50)
-    photo = models.ImageField('photo', )
+    title = models.CharField('kategoriya', max_length=50,blank=True)
+    photo = models.ImageField('photo', blank=True)
 
     def __str__(self):
         return self.title
@@ -24,22 +24,13 @@ class Category(models.Model):
 
 
 class Song(models.Model):
-    title = models.CharField('nomi', max_length=50)
+    title = models.CharField('Nomi(Artist bilan)', max_length=100000,unique=True)
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True)
-    artist = models.ForeignKey(Artist, on_delete=models.SET_NULL, null=True)
-    music_file = models.FileField('Musiqa Fayli', upload_to='musics',)
+        Category, on_delete=models.SET_NULL, null=True,blank=True)
+    artist = models.ForeignKey(Artist, on_delete=models.SET_NULL, null=True,blank=True)
+    music_file2 = models.FileField('Musiqa Fayli', upload_to='musics',blank=True)
     likes = models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
-    photo = models.ImageField(blank=True)
+    url = models.TextField(blank=True)
     def __str__(self):
-        return "%s - %s" % (self.title, self.artist)
-class YouTubeChannelUrls(models.Model):
-    url = models.URLField()
-
-class YoutubeMusicInfo(models.Model):
-    name = models.CharField(max_length=1000)
-    url = models.URLField()
-
-    def __str__(self):
-        return self.name
+        return self.title

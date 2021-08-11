@@ -26,7 +26,7 @@
 	</style>
 </head>
 
-<body style="color: black;overflow-x: hidden;">
+<body style="color: black;overflow-x: hidden;" class="container">
 	<nav class="navbar navbar-expand-md bg-light navbar-light">
 		<a class="navbar-brand" href="#"><img src="https://getyoutube.net/public/img/getyoutube.svg?7" width="180px"></a>
 		<button style="position: absolute;top: 8px;left: 15px;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -87,49 +87,37 @@
 			</div>
 		</div>
 	</nav>
-
-	<div class="overlay"></div>
-	<main style="padding-right: 20px;padding-left: 20px;">
-		<div class="frame">
-
-
-			<div style="text-align: center;z-index: 1100000000000000000000000000000000000 !important;margin-top: 80px;"
-				class="align-middle justify-content-center">
-				<div>
-					<h1>YouTube Video Downloader</h1><br>
-					<h2 style="font-size:large">The best Youtube Downloader - Video Downloader. It’s fast, free, and
-						fantastic!</h2><br>
-
-					<div class="container">
-						<div class="row">
-							<div class="col-md-2"></div>
-							<div class="col-md-8">
-								<form method="post">
-								{% csrf_token %}
-									<div class="input-group mb-3">
-										<input type="text" name="youtube_channel_url" class="form-control"
-											placeholder="Please paste your video's youtube url">
-										<div class="input-group-append">
-											<button class="btn btn-success" type="submit">Download</button>
-										</div>
-									</div>
-									
-								</form>
-							</div>
-							<div class="col-md-2"></div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-			
-
-		</div>
-			</main>
-
-	
+	<br>
+	<h3> Add Music via URL or File</h3><br>
+<form method="post">
+	{% csrf_token %}
+		<label>Title</label>
+			<input type="text" name="title" class="form-control"> 
+		
+			{% if x %}
+			<label>Category</label>
+				<select class="form-control"  name="category" >
+				{% for i in x %}
+					<option value={{i.id}}>{{i.title}}</option>
+				{% endfor %}
+			</select> 
+			{% endif %}
+		
+			{% if y %}
+			<label>Artist</label>
+				<select class="form-control"  name="artist" >
+				{% for i in y %}
+					<option value={{i.id}}>{{i.name}}</option>
+				{% endfor %}
+			</select>
+			{% endif %}
+		<label>Music File</label>
+			<div class="custom-file">
+			    <input accept=.mp3,.webp" type="file" name="music" class="custom-file-input" id="customFile">
+			    <label class="custom-file-label" for="customFile">Choose file</label>
+			  </div>
+		<label>Url</label>
+			<textarea class="form-control"  name="url" ></textarea><br/>
+		<button class="btn btn-outline-info">Send</button>
+</form>
 </body>
-
-</html>
