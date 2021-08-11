@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Animated Mesh Lines | Boreal Sky | Codrops</title>
+	<meta name="description" content="Animated WebGL lines created with the THREE.MeshLine library" />
+	<meta name="keywords" content="webgl, three.js, meshline, animation, lines" />
+	<meta name="author" content="Codrops" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="shortcut icon" href="favicon.ico">
+	<script>document.documentElement.className = "js"; var supportsCssVars = function () { var e, t = document.createElement("style"); return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e }; supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+	<!-- <link href="vendors.css" rel="stylesheet">
+	<link href="demo5.css" rel="stylesheet"> -->
+	<style type="">
+		@media screen and  (max-width: 767px)  {
+			.navbar-brand{
+				padding-left: 80px;
+				width: 85%;
+				text-align: center;
+			}
+	</style>
+</head>
+
+<body style="color: black;overflow-x: hidden;" class="container">
+	<nav class="navbar navbar-expand-md bg-light navbar-light">
+		<a class="navbar-brand" href="#"><img src="https://getyoutube.net/public/img/getyoutube.svg?7" width="180px"></a>
+		<button style="position: absolute;top: 8px;left: 15px;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span style="float: left;" class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav" >
+				<li class="nav-item">
+					<a class="nav-link" href="#">YouTube</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">TikTok</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+			</ul>
+		</div>
+		<div class="dropdown dropleft" style="position: absolute;right:10px;top: 15px;">
+			<button type="button" class="btn" style="border: none;background-color: none;padding: 0px;margin: 0px;" data-toggle="dropdown">
+				Uzbek
+			</button>
+			<div class="dropdown-menu" style="padding: 0;margin: 0px;">
+				<a class="dropdown-item" style="padding-right: 0px;" href="#">Ruscha</a>
+				<a class="dropdown-item" style="padding-right: 0px;" href="#">English</a>
+				<a class="dropdown-item" style="padding-right: 0px;" href="#">Kirilcha</a>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<h3> Add Music via URL or File</h3><br>
+<form method="post">
+	{% csrf_token %}
+		<label>Title</label>
+			<input type="text" name="title" class="form-control"> 
+		
+			{% if x %}
+			<label>Category</label>
+				<select class="form-control"  name="category" >
+				{% for i in x %}
+					<option value={{i.id}}>{{i.title}}</option>
+				{% endfor %}
+			</select> 
+			{% endif %}
+		
+			{% if y %}
+			<label>Artist</label>
+				<select class="form-control"  name="artist" >
+				{% for i in y %}
+					<option value={{i.id}}>{{i.name}}</option>
+				{% endfor %}
+			</select>
+			{% endif %}
+		<label>Music File</label>
+			<div class="custom-file">
+			    <input accept=.mp3,.webp" type="file" name="music" class="custom-file-input" id="customFile">
+			    <label class="custom-file-label" for="customFile">Choose file</label>
+			  </div>
+		<label>Url</label>
+			<textarea class="form-control"  name="url" ></textarea><br/>
+		<button class="btn btn-outline-info">Send</button>
+</form>
+</body>

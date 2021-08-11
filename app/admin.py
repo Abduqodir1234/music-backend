@@ -4,6 +4,10 @@ from .models import *
 
 admin.site.register(Category)
 admin.site.register(Artist)
-admin.site.register(Song)
-admin.site.register(YoutubeMusicInfo)
+
+class SongAdmin(admin.ModelAdmin):
+    search_fields = ["title"]
+admin.site.register(Song,SongAdmin)
+
+
 # Register your models here.
