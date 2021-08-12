@@ -89,7 +89,7 @@
 	</nav>
 	<br>
 	<h3> Add Music via URL or File</h3><br>
-<form method="post">
+<form method="post" enctype= multipart/form-data>
 	{% csrf_token %}
 		<label>Title</label>
 			<input type="text" name="title" class="form-control"> 

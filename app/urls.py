@@ -26,7 +26,8 @@ urlpatterns = [
     path("gytmc/",YouTubeMusics.as_view()),
     path("gminfo/",YoutubeMusicInfo2.as_view()),
     path("url/",get_channel_url),
-    path("music2",get_music)
+    path("music2",get_music),
+    path("search/navbar/",Search_in_Navbar.as_view())
     # path("top/artists/",top_artists) 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
