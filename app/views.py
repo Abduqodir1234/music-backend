@@ -71,24 +71,27 @@ def songswithcategory(request, pk=None):
     serializer = SongSerializer(queryset, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def songswithartists(request, pk=None):
-    artist = Artist.objects.get(id=pk)
-    queryset = Song.objects.filter(artist=artist)
-    serializer = SongSerializer(queryset, many=True)
-    return Response(serializer.data)
+
 from rest_framework.pagination import PageNumberPagination
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 20
     page_size_query_param = 'page_size'
     max_page_size = 100000000
 
+class songswithartists(APIView):
+    pagination_class = LargeResultsSetPagination
+    def get(request, pk=None):
+        artist = Artist.objects.get(id=pk)
+        queryset = Song.objects.filter(artist=artist)
+        serializer = SongSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 class SearchAPIView(generics.ListAPIView):
     search_fields = ['^title', '^artist__name', '^category__title']
     filter_backends = (filters.SearchFilter,)
     queryset = Song.objects.all()
     serializer_class = SongSerializer
-    pagination_class = LargeResultsSetPagination
+    
 
 @api_view(['GET'])
 def download(request, id):

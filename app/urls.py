@@ -17,7 +17,7 @@ urlpatterns = [
     path('songs', song_list, name='lists'),
     path('songs/<int:pk>', song_detail, name='song-detail'),
     path('sons/catgegory/<int:pk>', songswithcategory, name='song-category'),
-    path('songs/artist/<int:pk>', songswithartists, name='song-artist'),
+    path('songs/artist/<int:pk>', songswithartists.as_view(), name='song-artist'),
     path('music/', SearchAPIView.as_view()),
     path('download/song/<int:id>', download, name='song-download'),
     path('like/song/<int:pk>', song_like, name='song-like'),
