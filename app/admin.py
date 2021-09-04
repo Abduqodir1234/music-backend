@@ -1,4 +1,3 @@
-from app.views import YoutubeMusicInfo2
 from django.contrib import admin
 from .models import *
 

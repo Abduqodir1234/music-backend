@@ -8,7 +8,7 @@ song_detail = SongView.as_view({'get': 'retrieve'})
 song_like = SongView.as_view({'get': 'post'})
 
 top_musics = Tops.as_view({"get": "topmusic"})
-recent_music = Tops.as_view({"get":"recentmusics"})
+recent_music = Tops.as_view({"get": "recentmusics"})
 # top_artists = Tops.as_view({"get": "topartists"})
 
 urlpatterns = [
@@ -16,17 +16,20 @@ urlpatterns = [
     path('artists', ArtistApiView.as_view(), name='artists'),
     path('songs', song_list, name='lists'),
     path('songs/<int:pk>', song_detail, name='song-detail'),
-    path('sons/catgegory/<int:pk>', songswithcategory, name='song-category'),
+    path('songs/category/<int:pk>', songswithcategory, name='song-category'),
     path('songs/artist/<int:pk>', songswithartists, name='song-artist'),
     path('music/', SearchAPIView.as_view()),
     path('download/song/<int:id>', download, name='song-download'),
     path('like/song/<int:pk>', song_like, name='song-like'),
     path("top/musics", top_musics),
-    path("songs/recent/",recent_music),
-    path("gytmc/",YouTubeMusics.as_view()),
-    path("gminfo/",YoutubeMusicInfo2.as_view()),
-    path("url/",get_channel_url),
-    path("music2",get_music)
-    # path("top/artists/",top_artists) 
+    path("songs/recent/", recent_music),
+    path("url/", get_channel_url),
+    path("music2", get_music),
+    path("search/navbar/", Search_in_Navbar.as_view()),
+    path("like/category/<int:pk>",CategoryApiView.as_view()),
+    path("playlist/musics/",Playlist_Musics.as_view())
+    # path("top/artists/", top_artists)
+    # path("gytmc/", YouTubeMusics.as_view()),
+    # path("gminfo/", YoutubeMusicInfo2.as_view()),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
