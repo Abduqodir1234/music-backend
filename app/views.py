@@ -294,20 +294,23 @@ class Search_in_Navbar(APIView):
 class Playlist_Musics(APIView):
     def post(self,request):
         ids2 = request.data.get("array")
-        ids = ids2.split(",")
-        # r = []
-        t = "SELECT * FROM app_song WHERE"
-        for count,i in enumerate(ids):
-            # r.append(Q(id = int(i)))
-            if count == 0:
-                t += f' id={int(i)}'
-            else: 
-                t += f' or id={int(i)}'
-        r = Song.objects.raw(t)
-        paginator = CustomPagination()
-        queryset = paginator.paginate_queryset(r,request)
-        serializer = SongSerializer(queryset,many=True)
-        return paginator.get_paginated_response(serializer.data)
+        if ids2:
+            ids = ids2.split(",")
+            # r = []
+            t = "SELECT * FROM app_song WHERE"
+            for count,i in enumerate(ids):
+                # r.append(Q(id = int(i)))
+                if count == 0:
+                    t += f' id={int(i)}'
+                else: 
+                    t += f' or id={int(i)}'
+            r = Song.objects.raw(t)
+            paginator = CustomPagination()
+            queryset = paginator.paginate_queryset(r,request)
+            serializer = SongSerializer(queryset,many=True)
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            return Response([])
   # def collectLinks():
         #     while True:
         #         prev_ht = driver.execute_script(
