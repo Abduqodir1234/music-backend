@@ -296,15 +296,18 @@ class Playlist_Musics(APIView):
         ids2 = request.data.get("array")
         if ids2:
             ids = ids2.split(",")
+            z = []
+            for i in ids:
+                z.append(int(i))
             # r = []
-            t = "SELECT * FROM app_song WHERE"
-            for count,i in enumerate(ids):
-                # r.append(Q(id = int(i)))
-                if count == 0:
-                    t += f' id={int(i)}'
-                else: 
-                    t += f' or id={int(i)}'
-            r = Song.objects.raw(t)
+            # t = "SELECT * FROM app_song WHERE"
+            # for count,i in enumerate(ids):
+            #     # r.append(Q(id = int(i)))
+            #     if count == 0:
+            #         t += f' id={int(i)}'
+            #     else: 
+            #         t += f' or id={int(i)}'
+            r = Song.objects.filter(id__in = z)
             paginator = CustomPagination()
             queryset = paginator.paginate_queryset(r,request)
             serializer = SongSerializer(queryset,many=True)
