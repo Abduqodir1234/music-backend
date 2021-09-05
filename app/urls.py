@@ -26,8 +26,9 @@ urlpatterns = [
     path("url/", get_channel_url),
     path("music2", get_music),
     path("search/navbar/", Search_in_Navbar.as_view()),
-    path("like/category/<int:pk>",CategoryApiView.as_view()),
-    path("playlist/musics/",Playlist_Musics.as_view())
+    path("category/like/<int:pk>",CategoryApiView.as_view()),
+    path("playlist/musics/",Playlist_Musics.as_view()),
+    path("artist/like/<int:pk>",ArtistApiView.as_view())
     # path("top/artists/", top_artists)
     # path("gytmc/", YouTubeMusics.as_view()),
     # path("gminfo/", YoutubeMusicInfo2.as_view()),

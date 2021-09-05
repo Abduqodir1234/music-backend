@@ -15,6 +15,7 @@ class Artist(models.Model):
 class Category(models.Model):
     title = models.CharField('kategoriya', max_length=50, blank=True)
     photo = models.ImageField('photo', blank=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

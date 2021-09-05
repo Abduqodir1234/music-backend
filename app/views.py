@@ -35,7 +35,11 @@ class ArtistApiView(APIView):
         artist = Artist.objects.all().order_by('name')
         serializer = self.serializers(artist, many=True)
         return Response(serializer.data)
-
+    def post(self,request,pk=None):
+        x = get_object_or_404(Artist,pk = pk)
+        x.likes +=1
+        x.save()
+        return Response({"status":"Successfully completed"})
 
 class SongView(viewsets.ViewSet):
     serilize = SongSerializer
@@ -299,14 +303,6 @@ class Playlist_Musics(APIView):
             z = []
             for i in ids:
                 z.append(int(i))
-            # r = []
-            # t = "SELECT * FROM app_song WHERE"
-            # for count,i in enumerate(ids):
-            #     # r.append(Q(id = int(i)))
-            #     if count == 0:
-            #         t += f' id={int(i)}'
-            #     else: 
-            #         t += f' or id={int(i)}'
             r = Song.objects.filter(id__in = z)
             paginator = CustomPagination()
             queryset = paginator.paginate_queryset(r,request)
